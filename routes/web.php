@@ -11,6 +11,10 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+Volt::route('posts/view/{post}', 'posts.view-post')
+    ->middleware(['auth', 'verified'])
+    ->name('post.view');
+
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
