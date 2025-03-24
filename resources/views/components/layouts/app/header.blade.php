@@ -18,6 +18,11 @@
                 </flux:tooltip>
             </flux:navbar>
             <flux:navbar class="-mb-px max-lg:hidden">
+                <flux:navbar.item :href="route('post.create')" style="color:var(--color-secondary);" wire:navigate>
+                    {{ __('Create a Post') }}
+                </flux:navbar.item>
+            </flux:navbar>
+            <flux:navbar class="-mb-px max-lg:hidden">
                 <flux:navbar.item :href="route('dashboard')" style="color:var(--color-secondary);" wire:navigate>
                     {{ __('About') }}
                 </flux:navbar.item>
@@ -99,5 +104,12 @@
         {{ $slot }}
 
         @fluxScripts
+        {{-- @push('styles')
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+@endpush
+
+@push('scripts')
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+@endpush --}}
     </body>
 </html>

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use App\Models\User;
 use App\Models\Comment;
+use App\Models\Tag;
 
 class Post extends Model
 {
@@ -18,5 +19,9 @@ class Post extends Model
     public function comment()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function tag(){
+        return $this->hasMany(Tag::class);
     }
 }
