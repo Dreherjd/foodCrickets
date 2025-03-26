@@ -2,6 +2,8 @@
 
 use Livewire\Volt\Component;
 use Spatie\LivewireFilepond\WithFilePond;
+use App\Models\Post;
+use App\Models\User;
 
 new class extends Component {
     use WithFilePond;
@@ -10,8 +12,8 @@ new class extends Component {
     public $content;
     public $rating;
     public $dollar_rating;
-    public $would_go_back;
-    public $hall_of_fame;
+    public $would_go_back = false;
+    public $hall_of_fame = false;
     public $business_name;
     public $business_addr;
     public $alt_text;
@@ -36,15 +38,14 @@ new class extends Component {
             'content' => ['required', 'string', 'min:20'],
             'rating' => ['required', 'string', 'min:1'],
             'dollar_rating' => ['string'],
-            'business_name' => ['string', 'min:3'],
-            'business_addr' => ['string'],
             'alt_text' => ['string', 'min:2'],
         ]);
         auth()
             ->user()
-            ->posts()
+            ->post()
             ->create([
                 'title' => $this->title,
+                // 'content' => 'Here is 20 characters',
                 'content' => $this->content,
                 'rating' => $this->rating,
                 'dollar_rating' => $this->dollar_rating,
@@ -59,8 +60,8 @@ new class extends Component {
     }
 }; ?>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/3.2.7/css/froala_editor.pkgd.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/3.2.7/js/froala_editor.pkgd.min.js"></script>
+{{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/3.2.7/css/froala_editor.pkgd.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/3.2.7/js/froala_editor.pkgd.min.js"></script> --}}
 
 <div>
     <form wire:submit='submit' class="space-y-4">
@@ -74,12 +75,16 @@ new class extends Component {
         <x-input wire:model='business_name' label="Business Name" />
         <x-input wire:model='business_addr' label="Business Address" />
         <x-input wire:model='alt_text' label="Image Alt Text" />
-        <x-filepond::upload wire:model='file' class="mt-4" multiple="false" wire:model="file" />
-        @filepondScripts
-        <x-button label="Submit" right-icon="arrow-right" type="submit" style="background-color:var(--color-primary);"
-            spinner />
+        {{-- <x-filepond::upload wire:model='file' class="mt-4" multiple="false" wire:model="file" />
+        @filepondScripts --}}
+        <div class="pt-4">
+            <x-button href="{{ route('dashboard') }}" label="Cancel"
+                style="background-color:var(--color-warning);color:black;" />
+            <x-button label="Submit" right-icon="arrow-right" type="submit"
+                style="background-color:var(--color-primary);color:black;" spinner />
+        </div>
     </form>
 </div>
-<script>
+{{-- <script>
     new FroalaEditor('#editor');
-</script>
+</script> --}}
