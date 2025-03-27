@@ -58,12 +58,12 @@ class User extends Authenticatable
             ->implode('');
     }
 
-    public function post()
+    public function posts()
     {
         return $this->hasMany(Post::class);
     }
 
-    public function comment(){
+    public function comments(){
         return $this->hasMany(Comment::class);
     }
 }

@@ -19,6 +19,14 @@ Volt::route('posts/create', 'posts.create-post')
     ->middleware(['auth', 'verified'])
     ->name('post.create');
 
+Volt::route('posts/view/{post}/create-comment', 'comments.create-comment')
+    ->middleware(['auth', 'verified'])
+    ->name('comment.create');
+
+Volt::route('posts/view/{post}/edit-comment', 'comments.edit-comment')
+    ->middleware(['auth', 'verified'])
+    ->name('comment.edit');
+
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
@@ -27,4 +35,4 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

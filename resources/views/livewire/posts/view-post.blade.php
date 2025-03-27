@@ -7,16 +7,24 @@ use App\Models\Comment;
 use App\Models\Tag;
 
 new class extends Component {
+    protected $listeners = [
+        'refresh-component' => '$refresh',
+    ];
+
     public Post $post;
-    // public array $tags;
+
     public function mount(Post $post)
     {
         $this->fill($post);
     }
 
-    protected $listeners = [
-        'refresh-component' => '$refresh',
-    ];
+    public function with(): array
+    {
+        return [
+            'comments' => Comment::where('post_id', $this->post->id)->orderBy('created_at', 'desc')->get(),
+            // here's where tags will get loaded when we get there.
+        ];
+    }
 
     public function likePost($post_id)
     {
@@ -27,18 +35,15 @@ new class extends Component {
         $post->save();
         $this->dispatch('refresh-component');
     }
-
-    // public function with(){
-    //     //here's where we'll load tags, when we have them
-    // }
 }; ?>
 
 <div class="container mx-auto px-40">
-    <x-button xs class="mb-2 bg-secondary" href="{{ url()->previous() }}" icon="arrow-long-left" label="Back" />
+    <x-button xs class="mb-2" style="background-color:var(--color-secondary);" href="{{ route('dashboard') }}"
+        icon="arrow-long-left" label="Back" />
     <p class="text-3xl">{{ $post->title }}</p>
     <p class="text-xs text-stone-500">{{ $post->user->name }} | {{ $post->created_at->diffForHumans() }}</p>
     <div class="space-y-1 mt-2">
-        <x-badge class="bg-primary-custom" label="Fast Food" />
+        <x-badge style="background-color:var(--color-primary);color:black;" label="Fast Food" />
         @if ($post->would_go_back)
             <x-badge style="background-color:var(--color-primary);color:black;" label="Would Go Back" />
         @endif
@@ -73,12 +78,24 @@ new class extends Component {
 
     <div class="mt-4 flex items-center justify-between p-4 bg-gray-100 border border-gray-300 rounded-lg">
         <div class="flex-1">
-            <h2 class="text-lg font-semibold">share your thoughts</h2>
-            <p class="text-gray-600">Leave a comment</p>
+            {{-- <h2 class="text-lg font-semibold">Share Your Thoughts</h2> --}}
+            {{-- <p class="text-gray-600">Leave a Comment</p> --}}
+            <x-button href="{{ route('comment.create', $post) }}" label="Leave a Comment" style="background-color:var(--color-primary);color:black;" />
         </div>
         <div class="bg-custom-primary flex items-center space-x-4">
             <x-button icon="hand-thumb-up" wire:click="likePost('{{ $post->id }}')" class="px-4 py-2 rounded"
                 style="background-color:var(--color-primary);color:black;" label="{{ $post->like_count }}" />
         </div>
     </div>
+    @foreach ($comments as $comment)
+    <x-card class="mt-4" title="{{ $comment->user->name }} - {{ $comment->created_at->diffForHumans() }}" rounded="2xl" shadow="2xl">
+        <x-slot name="slot">
+            {{ $comment->content }}
+        </x-slot>
+        <x-slot name="footer" class="flex items-center space-x-2">
+            <x-button style="background-color:var(--color-warning);" label="Delete"  />
+            <x-button href="{{ route('comment.edit',$comment) }}" style="background-color:var(--color-secondary);" label="Edit"  />
+        </x-slot>
+    </x-card>
+    @endforeach
 </div>

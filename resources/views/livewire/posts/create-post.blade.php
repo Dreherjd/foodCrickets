@@ -42,7 +42,7 @@ new class extends Component {
         ]);
         auth()
             ->user()
-            ->post()
+            ->posts()
             ->create([
                 'title' => $this->title,
                 // 'content' => 'Here is 20 characters',

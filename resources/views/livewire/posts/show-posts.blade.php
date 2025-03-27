@@ -35,8 +35,8 @@ new class extends Component {
             @endif
             <div wire:key='{{ $post->id }}' class="flex flex-col w-full">
                 <img src="{{ URL::asset('/storage/' . $post->pic_link) }}" alt="{{ $post->alt_text }}"
-                    class="w-full h-auto max-h-48 object-cover" />
-                <p class="mt-2 font-semibold text-secondary">{{ Str::limit($post->title, 25) }}</p>
+                    class="w-full h-48 max-h-48 object-cover" />
+                <p class="mt-2 font-semibold text-secondary">{{ Str::limit($post->title, 20) }}</p>
                 <p class="mt-2 text-xs text-stone-500">{{ $post->user->name }}</p>
                 <p class="mt-2 break-words">{{ Str::limit($post->content, 75) }}</p>
                 <x-button class="mt-2" href="{{ route('post.view', $post) }}" style="background-color:var(--color-primary);color:black;" label="View" />
