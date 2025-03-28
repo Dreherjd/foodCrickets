@@ -23,7 +23,7 @@ Volt::route('posts/view/{post}/create-comment', 'comments.create-comment')
     ->middleware(['auth', 'verified'])
     ->name('comment.create');
 
-Volt::route('posts/view/{post}/edit-comment', 'comments.edit-comment')
+Volt::route('comments/{comment}/edit', 'comments.edit-comment')
     ->middleware(['auth', 'verified'])
     ->name('comment.edit');
 

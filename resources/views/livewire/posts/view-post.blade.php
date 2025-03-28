@@ -35,6 +35,11 @@ new class extends Component {
         $post->save();
         $this->dispatch('refresh-component');
     }
+
+    public function deleteComment($comment_id){
+        $comment = Comment::where('id', $comment_id)->first();
+        $comment->delete();
+    }
 }; ?>
 
 <div class="container mx-auto px-40">
@@ -78,8 +83,6 @@ new class extends Component {
 
     <div class="mt-4 flex items-center justify-between p-4 bg-gray-100 border border-gray-300 rounded-lg">
         <div class="flex-1">
-            {{-- <h2 class="text-lg font-semibold">Share Your Thoughts</h2> --}}
-            {{-- <p class="text-gray-600">Leave a Comment</p> --}}
             <x-button href="{{ route('comment.create', $post) }}" label="Leave a Comment" style="background-color:var(--color-primary);color:black;" />
         </div>
         <div class="bg-custom-primary flex items-center space-x-4">
@@ -93,8 +96,8 @@ new class extends Component {
             {{ $comment->content }}
         </x-slot>
         <x-slot name="footer" class="flex items-center space-x-2">
-            <x-button style="background-color:var(--color-warning);" label="Delete"  />
-            <x-button href="{{ route('comment.edit',$comment) }}" style="background-color:var(--color-secondary);" label="Edit"  />
+            <x-button style="background-color:var(--color-warning);" wire:click="deleteComment('{{ $comment->id }}')" href="#" label="Delete"  />
+            <x-button href="{{ route('comment.edit', $comment) }}" style="background-color:var(--color-secondary);" label="Edit"  />
         </x-slot>
     </x-card>
     @endforeach
