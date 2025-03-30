@@ -27,6 +27,9 @@ Volt::route('comments/{comment}/edit', 'comments.edit-comment')
     ->middleware(['auth', 'verified'])
     ->name('comment.edit');
 
+Volt::route('search', 'search')
+    ->name('search');
+
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 

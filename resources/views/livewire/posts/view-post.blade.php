@@ -36,15 +36,14 @@ new class extends Component {
         $this->dispatch('refresh-component');
     }
 
-    public function deleteComment($comment_id){
+    public function deleteComment($comment_id)
+    {
         $comment = Comment::where('id', $comment_id)->first();
         $comment->delete();
     }
 }; ?>
 
 <div class="container mx-auto px-40">
-    <x-button xs class="mb-2" style="background-color:var(--color-secondary);" href="{{ route('dashboard') }}"
-        icon="arrow-long-left" label="Back" />
     <p class="text-3xl">{{ $post->title }}</p>
     <p class="text-xs text-stone-500">{{ $post->user->name }} | {{ $post->created_at->diffForHumans() }}</p>
     <div class="space-y-1 mt-2">
@@ -56,9 +55,14 @@ new class extends Component {
             <x-badge style="background-color:var(--color-primary);color:black;" label="Hall of Fame" />
         @endif
     </div>
-    <div class="space-y-2 mt-2">
-        <livewire:posts.star-rating :rating="$post->rating">
-    </div>
+    @if ($post->rating)
+        <div class="mb-2 mt-2 flex items-center space-x-2">
+            <livewire:posts.star-rating :rating="$post->rating" />
+            <livewire:posts.dollar-rating :dollarRating="$post->dollar_rating" />
+        </div>
+    @else
+        <p>No rating given</p>
+    @endif
 
     <div class="flex mt-4">
         <img src="{{ URL::asset('/storage/' . $post->pic_link) }}" alt="{{ $post->alt_text }}" height="400"
@@ -83,7 +87,8 @@ new class extends Component {
 
     <div class="mt-4 flex items-center justify-between p-4 bg-gray-100 border border-gray-300 rounded-lg">
         <div class="flex-1">
-            <x-button href="{{ route('comment.create', $post) }}" label="Leave a Comment" style="background-color:var(--color-primary);color:black;" />
+            <x-button href="{{ route('comment.create', $post) }}" label="Leave a Comment"
+                style="background-color:var(--color-primary);color:black;" />
         </div>
         <div class="bg-custom-primary flex items-center space-x-4">
             <x-button icon="hand-thumb-up" wire:click="likePost('{{ $post->id }}')" class="px-4 py-2 rounded"
@@ -91,14 +96,17 @@ new class extends Component {
         </div>
     </div>
     @foreach ($comments as $comment)
-    <x-card class="mt-4" title="{{ $comment->user->name }} - {{ $comment->created_at->diffForHumans() }}" rounded="2xl" shadow="2xl">
-        <x-slot name="slot">
-            {{ $comment->content }}
-        </x-slot>
-        <x-slot name="footer" class="flex items-center space-x-2">
-            <x-button style="background-color:var(--color-warning);" wire:click="deleteComment('{{ $comment->id }}')" href="#" label="Delete"  />
-            <x-button href="{{ route('comment.edit', $comment) }}" style="background-color:var(--color-secondary);" label="Edit"  />
-        </x-slot>
-    </x-card>
+        <x-card class="mt-4" title="{{ $comment->user->name }} - {{ $comment->created_at->diffForHumans() }}"
+            rounded="2xl" shadow="2xl">
+            <x-slot name="slot">
+                {{ $comment->content }}
+            </x-slot>
+            <x-slot name="footer" class="flex items-center space-x-2">
+                <x-button style="background-color:var(--color-warning);"
+                    wire:click="deleteComment('{{ $comment->id }}')" href="#" label="Delete" />
+                <x-button href="{{ route('comment.edit', $comment) }}" style="background-color:var(--color-secondary);"
+                    label="Edit" />
+            </x-slot>
+        </x-card>
     @endforeach
 </div>
