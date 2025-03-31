@@ -47,7 +47,7 @@ new class extends Component {
     <p class="text-3xl">{{ $post->title }}</p>
     <p class="text-xs text-stone-500">{{ $post->user->name }} | {{ $post->created_at->diffForHumans() }}</p>
     <div class="space-y-1 mt-2">
-        <x-badge style="background-color:var(--color-primary);color:black;" label="Fast Food" />
+        {{-- <x-badge style="background-color:var(--color-primary);color:black;" label="Fast Food" /> --}}
         @if ($post->would_go_back)
             <x-badge style="background-color:var(--color-primary);color:black;" label="Would Go Back" />
         @endif
@@ -55,7 +55,7 @@ new class extends Component {
             <x-badge style="background-color:var(--color-primary);color:black;" label="Hall of Fame" />
         @endif
     </div>
-    @if ($post->rating)
+    @if ($post->rating && $post->dollar_rating)
         <div class="mb-2 mt-2 flex items-center space-x-2">
             <livewire:posts.star-rating :rating="$post->rating" />
             <livewire:posts.dollar-rating :dollarRating="$post->dollar_rating" />

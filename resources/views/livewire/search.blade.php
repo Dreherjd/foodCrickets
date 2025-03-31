@@ -52,17 +52,25 @@ new class extends Component {
                     @if ($item->rating)
                         <div class="mb-2 mt-2 flex items-center space-x-2">
                             <livewire:posts.star-rating :rating="$item->rating" />
+                            {{-- <livewire:posts.dollar-rating :dollarRating="$item->dollar_rating" /> --}}
+                        </div>
+                    @else
+                        <p class="text-xs">No rating given</p>
+                    @endif
+                    @if ($item->rating)
+                        <div class="mb-2 mt-2 flex items-center space-x-2">
+                            {{-- <livewire:posts.star-rating :rating="$item->rating" /> --}}
                             <livewire:posts.dollar-rating :dollarRating="$item->dollar_rating" />
                         </div>
                     @else
-                        <p>No rating given</p>
+                        <p class="text-xs">No dollar rating given</p>
                     @endif
                     @if ($item->business_name)
                         <div class="mb-2 mt-2 flex items-center space-x-2">
                             <p class="text-xs">{{ $item->business_name }} | {{ $item->business_addr }}</p>
                         </div>
                     @else
-                        <p>No dollar rating given</p>
+                        <p class="text-xs">No business information given</p>
                     @endif
                     <x-slot name="footer" class="flex items-center justify-between" class="flex">
                         <x-button label="View Post" class="flex-1" href="{{ route('post.view', $item->id) }}"
