@@ -45,7 +45,6 @@ new class extends Component {
             ->posts()
             ->create([
                 'title' => $this->title,
-                // 'content' => 'Here is 20 characters',
                 'content' => $this->content,
                 'rating' => $this->rating,
                 'dollar_rating' => $this->dollar_rating,
@@ -56,6 +55,7 @@ new class extends Component {
                 'alt_text' => $this->alt_text,
                 'file' => $this->file,
             ]);
+
         redirect(route('dashboard'));
     }
 }; ?>

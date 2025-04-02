@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tags', function (Blueprint $table) {
-            $table->id()->primary();
-            $table->timestamps();
-            $table->string('name');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('role')->default('user');
         });
     }
 
@@ -23,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tags');
+        Schema::table('users', function (Blueprint $table) {
+            //
+        });
     }
 };

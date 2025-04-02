@@ -3,10 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Tag extends Model
 {
-    public function post(){
-        return $this->hasMany(Post::class);
+    protected $fillable = [
+        'name',
+    ];
+
+    public function post(): BelongsToMany {
+        return $this->belongsToMany(Post::class);
     }
 }

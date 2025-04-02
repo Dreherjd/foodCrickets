@@ -17,13 +17,20 @@
                     <flux:navbar.item class="!h-10 [&>div>svg]:size-5" icon="magnifying-glass" href="{{ route('search') }}" :label="__('Search')" />
                 </flux:tooltip>
             </flux:navbar>
+            @auth()
+            <flux:navbar class="-mb-px max-lg:hidden">
+                <flux:navbar.item :href="route('post.create')" style="color:var(--color-secondary);" wire:navigate>
+                    {{ __('Admin') }}
+                </flux:navbar.item>
+            </flux:navbar>
+            @endauth
             <flux:navbar class="-mb-px max-lg:hidden">
                 <flux:navbar.item :href="route('post.create')" style="color:var(--color-secondary);" wire:navigate>
                     {{ __('Create a Post') }}
                 </flux:navbar.item>
             </flux:navbar>
             <flux:navbar class="-mb-px max-lg:hidden">
-                <flux:navbar.item :href="route('dashboard')" style="color:var(--color-secondary);" wire:navigate>
+                <flux:navbar.item :href="route('about.view')" style="color:var(--color-secondary);" wire:navigate>
                     {{ __('About') }}
                 </flux:navbar.item>
             </flux:navbar>

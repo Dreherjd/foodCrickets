@@ -47,7 +47,6 @@ new class extends Component {
     <p class="text-3xl">{{ $post->title }}</p>
     <p class="text-xs text-stone-500">{{ $post->user->name }} | {{ $post->created_at->diffForHumans() }}</p>
     <div class="space-y-1 mt-2">
-        {{-- <x-badge style="background-color:var(--color-primary);color:black;" label="Fast Food" /> --}}
         @if ($post->would_go_back)
             <x-badge style="background-color:var(--color-primary);color:black;" label="Would Go Back" />
         @endif

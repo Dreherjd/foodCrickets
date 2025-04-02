@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use App\Models\User;
 use App\Models\Comment;
 use App\Models\Tag;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Post extends Model
 {
@@ -26,7 +27,7 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function tags(){
-        return $this->hasMany(Tag::class);
+    public function tags(): BelongsToMany{
+        return $this->belongstoMany(Tag::class);
     }
 }

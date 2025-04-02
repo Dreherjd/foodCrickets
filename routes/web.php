@@ -4,16 +4,17 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('dashboard');
 })->name('home');
 
 Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
 Volt::route('posts/view/{post}', 'posts.view-post')
-    ->middleware(['auth', 'verified'])
     ->name('post.view');
+
+volt::route('about', 'about.view-about')
+    ->name('about.view');
 
 Volt::route('posts/create', 'posts.create-post')
     ->middleware(['auth', 'verified'])
